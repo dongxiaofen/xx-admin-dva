@@ -1,3 +1,9 @@
+## 安装dva-cli
+
+```bash
+$ npm i dva-cli
+```
+
 ## 使用
 
 ```bash
