@@ -3,6 +3,11 @@ import { Router, Route, Switch } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import PropTypes from 'prop-types';
 import App from './routes/App';
+import { Spin } from 'antd';
+
+dynamic.setDefaultLoadingComponent(() => {
+  return <Spin size="large" />;
+});
 
 function RouterConfig({ history, app }) {
   const error = dynamic({
