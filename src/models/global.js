@@ -1,4 +1,5 @@
 
+import { getUserInfo } from '../services/global';
 export default {
   namespace: 'global',
   state: {
@@ -6,13 +7,20 @@ export default {
   },
   reducers: {
     updateGlobal (state, {payload}) {
-      console.log(payload, 'global-----------');
       return {
         ...state,
         userInfo: payload
       };
     },
   },
-  effects: {},
-  subscriptions: {},
+  effects: {
+    * getUserInfo (_, {call, put}) {
+      const response = yield call(getUserInfo);
+      yield put({
+        type: 'updateGlobal',
+        payload: response.data,
+      });
+    }
+  },
+  // subscriptions: {},
 };

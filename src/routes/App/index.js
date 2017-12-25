@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
-// import styles from './index.less';
+
+import { Layout } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
+
+import styles from './index.less';
 
 // function App() {
 //   return (
@@ -23,21 +27,28 @@ class App extends Component {
     super(props);
   }
   componentDidMount() {
-    // const pathname = this.props.location.pathname;
-    // if (pathname !== '/login') {
-    //   console.log('获取登录信息');
-    // }
+    const pathname = this.props.location.pathname;
+    if (pathname !== '/login') {
+      // console.log('获取登录信息');
+      this.props.dispatch({type: 'global/getUserInfo'});
+    }
   }
   render() {
-    // console.log(this.props, 'props');
     const pathname = this.props.location.pathname;
     return (
       <div>
         {
           pathname === '/login' ? this.props.children :
           <div>
-            <div>app</div>
-            {this.props.children}
+            <Layout>
+              <Header className={styles.header}>
+                <span className={styles.logo}>星象后台管理系统</span>
+              </Header>
+              <Layout>
+                <Sider width="200" style={{height: '100%'}}>Sider</Sider>
+                <Content>{this.props.children}</Content>
+              </Layout>
+            </Layout>
           </div>
         }
       </div>
@@ -52,7 +63,7 @@ class App extends Component {
 //   loading: PropTypes.object,
 // }
 function mapStateToProps(state) {
-  return state;
+  return {global: state.global};
 }
 
 export default withRouter(connect(mapStateToProps)(App));

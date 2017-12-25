@@ -1,4 +1,5 @@
-import { message } from 'antd';
+import { message, Modal } from 'antd';
+import { routerRedux } from 'dva/router';
 
 export default async function request (axios) {
   return await axios
@@ -15,7 +16,18 @@ export default async function request (axios) {
           if (response.data.errorCode === 401004) {
             message.error(response.data.message + ',请确认用户名和密码');
           }
-          
+
+          if (response.data.errorCode === 401006) {
+            Modal.warning({
+              title: '登录超时',
+              content: '登录超时,请重新登录...',
+              onOk() {
+                // dispatch(routerRedux.push('/login'));
+                window.location = '/login';
+              }
+            });
+          }
+
           // const errorData = new Error(response.status, response.statusText);
           // errorData.response = response;
           // // throw errorData;

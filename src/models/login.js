@@ -24,8 +24,12 @@ export default {
     }
   },
   effects: {
-    * login ({payload}, {call, put}) {
+    * login ({payload}, {call, put, cancel}) {
       const response = yield call(login, payload);
+      // setTimeout(() => {
+      //   cancel(response);
+      //   console.log('cancel----------');
+      // }, 1);
       if (response && response.success) {
         yield put({
           type: 'updateInfo',

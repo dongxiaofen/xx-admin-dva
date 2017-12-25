@@ -19,7 +19,7 @@ class ClientList extends Component {
 
   }
   render() {
-    console.log(this.props, 'props');
+    // console.log(this.props, 'props');
     return (
       <div>
         clientlist
@@ -29,6 +29,7 @@ class ClientList extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state, 'state');
   return state;
 }
 
