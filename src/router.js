@@ -3,10 +3,12 @@ import { Router, Route, Switch } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import PropTypes from 'prop-types';
 import App from './routes/App';
-import { Spin } from 'antd';
+// import { Spin } from 'antd';
+import CirclesLoading from './components/common/CirclesLoading';
 
 dynamic.setDefaultLoadingComponent(() => {
-  return <Spin size="large" />;
+  // return <div ><Spin size="large" /></div>;
+  return <CirclesLoading />
 });
 
 function RouterConfig({ history, app }) {
