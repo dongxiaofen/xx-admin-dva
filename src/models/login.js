@@ -1,8 +1,7 @@
 import { login } from '../services/login';
 import { routerRedux } from 'dva/router';
-// import globalState from './global';
-// import * as loginApi from 'services/login';
-// import * as api from 'services/example';
+import { notification } from 'antd';
+
 export default {
   namespace: 'login',
   state: {
@@ -24,12 +23,8 @@ export default {
     }
   },
   effects: {
-    * login ({payload}, {call, put, cancel}) {
+    * login ({payload}, {call, put}) {
       const response = yield call(login, payload);
-      // setTimeout(() => {
-      //   cancel(response);
-      //   console.log('cancel----------');
-      // }, 1);
       if (response && response.success) {
         yield put({
           type: 'updateInfo',
@@ -43,23 +38,17 @@ export default {
           type: 'global/updateGlobal',
           payload: response.data,
         });
-        yield put(routerRedux.push('/'));
+        const jumpUrl = localStorage.getItem('sessionOutUrl') === null ? '/' : localStorage.getItem('sessionOutUrl');
+        yield put(routerRedux.push(jumpUrl));
+        localStorage.removeItem('sessionOutUrl');
+        notification.success({
+          message: '登录成功',
+          description: '亲爱的' + response.data.email + ', 欢迎回来.',
+        });
       }
     }
   },
-  subscriptions: {
-    // setupHistory ({ dispatch, history }) {
-    //   history.listen((location) => {
-    //     if (location.pathname === '/login') {
-    //       dispatch({
-    //         type: 'login',
-    //         payload: {
-    //           email: 'admin@socialcredits.cn',
-    //           password: '25f9e794323b453885f5181f1b624d0'
-    //         }
-    //       });
-    //     }
-    //   })
-    // },
-  },
+  // subscriptions: {
+  //
+  // },
 };

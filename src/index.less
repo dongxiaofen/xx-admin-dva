@@ -4,3 +4,16 @@ html, body, :global(#root) {
   height: 100%;
   // background: #f0f2f5;
 }
+:global .clearfix {
+  zoom: 1;
+  &::before, &::after {
+    content: " ";
+    display: table;
+  }
+  &::after {
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+  }
+}

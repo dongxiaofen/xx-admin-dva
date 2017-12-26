@@ -5,6 +5,6 @@ export function getUserInfo() {
   return request(axios.get('/api/admin/info'))
 };
 
-// export function logout() {
-//   console.log('logout');
-// };
+export function logout() {
+  return request(axios.delete('/api/admin/logout'))
+};
