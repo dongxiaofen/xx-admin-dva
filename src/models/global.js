@@ -58,26 +58,27 @@ export default {
     ],
   },
   reducers: {
-    updateGlobal (state, {payload}) {
+    updateGlobal(state, {payload}) {
       return {
         ...state,
         userInfo: payload
       };
     },
-    collapsed (state, {payload}) {
+    collapsed(state, {payload}) {
       return {...state, collapsed: payload}
     }
   },
   effects: {
-    * getUserInfo (_, {call, put}) {
+    * getUserInfo(_, {call, put}) {
       const response = yield call(getUserInfo);
       yield put({
         type: 'updateGlobal',
         payload: response.data,
       });
     },
-    * logout (_, {call, put}) {
+    * logout(_, {call, put}) {
       const response = yield call(logout);
+      console.log(response, 'response---------===========');
       yield put({
         type: 'updateGlobal',
         payload: {},

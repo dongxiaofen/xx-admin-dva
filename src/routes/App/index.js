@@ -15,12 +15,12 @@ class App extends Component {
     children: PropTypes.element.isRequired,
     location: PropTypes.object,
     dispatch: PropTypes.func,
-    app: PropTypes.object,
-    loading: PropTypes.object,
+    global: PropTypes.object,
+    // loading: PropTypes.object,
   }
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   componentDidMount() {
     const pathname = this.props.location.pathname;
     if (pathname !== '/login') {

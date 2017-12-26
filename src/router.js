@@ -8,7 +8,7 @@ import CirclesLoading from './components/common/CirclesLoading';
 
 dynamic.setDefaultLoadingComponent(() => {
   // return <div ><Spin size="large" /></div>;
-  return <CirclesLoading />
+  return <CirclesLoading />;
 });
 
 function RouterConfig({ history, app }) {
@@ -32,7 +32,8 @@ function RouterConfig({ history, app }) {
       <App>
         <Switch>
           {routes.map(({path, ...dynamics}, key) => (
-            <Route key={key}
+            <Route
+              key={key}
               exact
               path={path}
               component={dynamic({

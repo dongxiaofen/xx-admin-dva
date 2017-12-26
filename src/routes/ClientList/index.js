@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { connect } from 'dva';
 // import { withRouter } from 'dva/router';
 // import styles from './index.less';
@@ -12,9 +12,9 @@ class ClientList extends Component {
     // app: PropTypes.object,
     // loading: PropTypes.object,
   }
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   componentDidMount() {
 
   }

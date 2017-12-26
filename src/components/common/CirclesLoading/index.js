@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './index.less';
 
-function CirclesLoading({height = '400px'}) {
+function CirclesLoading({ height = '400px' }) {
   return (
     <div className={styles.loaderTable} style={{ height: height }}>
       <div className={styles.loaderTableCell}>
@@ -12,5 +13,8 @@ function CirclesLoading({height = '400px'}) {
     </div>
   );
 }
+CirclesLoading.propTypes = {
+  height: PropTypes.string,
+};
 
 export default CirclesLoading;

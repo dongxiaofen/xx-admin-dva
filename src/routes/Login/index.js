@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'dva'
-import { Button, Row, Form, Input } from 'antd'
-import styles from './index.less'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
+import { Button, Row, Form, Input } from 'antd';
+import styles from './index.less';
 import md5 from 'crypto-js/md5';
 import encHex from 'crypto-js/enc-hex';
 
-const FormItem = Form.Item
+const FormItem = Form.Item;
 
 const Login = ({
   login,
@@ -20,11 +20,11 @@ const Login = ({
   function handleOk () {
     validateFieldsAndScroll((errors, values) => {
       if (errors) {
-        return
+        return;
       }
       // console.log(values, 'values');
-      dispatch({ type: 'login/login', payload: {email: values.email, password: encHex.stringify(md5(values.password))} })
-      dispatch({ type: 'login/updateLogin', payload: {loading: true, ...values} })
+      dispatch({ type: 'login/login', payload: {email: values.email, password: encHex.stringify(md5(values.password))} });
+      dispatch({ type: 'login/updateLogin', payload: {loading: true, ...values} });
     })
   }
   return (
@@ -63,17 +63,17 @@ const Login = ({
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Login.propTypes = {
   form: PropTypes.object,
   dispatch: PropTypes.func,
   login: PropTypes.object,
-}
+};
 // function mapStateToProps(state) {
 //   console.log(state.login, 'state login');
 //   return {state.login};
 // }
 // export default connect(mapStateToProps)(Form.create()(Login))
-export default connect(({login}) => ({login}))(Form.create()(Login))
+export default connect(({login}) => ({login}))(Form.create()(Login));
