@@ -1,49 +1,31 @@
 import React from 'react';
-import { Router, Route, Switch } from 'dva/router';
+import { Router, Route, Switch, Redirect } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import PropTypes from 'prop-types';
-import App from './routes/App';
-// import { Spin } from 'antd';
 import CirclesLoading from './components/common/CirclesLoading';
-
+import App from './routes/App';
+import { navigation } from './common/nav';
 dynamic.setDefaultLoadingComponent(() => {
-  // return <div ><Spin size="large" /></div>;
   return <CirclesLoading />;
 });
 
 function RouterConfig({ history, app }) {
-  const error = dynamic({
+  const navData = navigation(app);
+  const passProps = {
     app,
-    component: () => import('./routes/Error'),
+    navData,
+  };
+  const routes = Object.keys(navData).map((item) => {
+    const { path, component, exact } = navData[item];
+    const Comp = component;
+    return (<Route key={path} exact={exact} path={path} render={(props) => <Comp {...props} {...passProps} />}/>);
   });
-
-  const routes = [
-    {
-      path: '/',
-      component: () => import('./routes/ClientList'),
-    }, {
-      path: '/login',
-      models: () => [import('./models/login')],
-      component: () => import('./routes/Login'),
-    }
-  ];
   return (
     <Router history={history}>
-      <App>
-        <Switch>
-          {routes.map(({path, ...dynamics}, key) => (
-            <Route
-              key={key}
-              exact
-              path={path}
-              component={dynamic({
-                app,
-                ...dynamics
-              })}/>
-          ))}
-          <Route component={error} />
-        </Switch>
-      </App>
+      <Switch>
+        {/*<Redirect exact from='/' to='/clientCenter/clientList'/>*/}
+        {routes}
+      </Switch>
     </Router>
   );
 }
