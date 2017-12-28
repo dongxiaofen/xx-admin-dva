@@ -65,7 +65,13 @@ export default {
       };
     },
     collapsed(state, {payload}) {
-      return {...state, collapsed: payload}
+      return {...state, collapsed: payload};
+    },
+    clearGlobal() {
+      return {
+        userInfo: {},
+        collapsed: false,
+      };
     }
   },
   effects: {
@@ -78,7 +84,7 @@ export default {
     },
     * logout(_, {call, put}) {
       const response = yield call(logout);
-      console.log(response, 'response---------===========');
+      // console.log(response, 'response---------===========');
       yield put({
         type: 'updateGlobal',
         payload: {},

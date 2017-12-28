@@ -21,11 +21,11 @@ class App extends Component {
     global: PropTypes.object,
     // loading: PropTypes.object,
   }
-  // constructor(props) {
-  //   super(props);
-  // }
   componentDidMount() {
     this.props.dispatch({type: 'global/getUserInfo'});
+  }
+  componentWillUnmount() {
+    this.props.dispatch({type: 'global/clearGlobal'});
   }
   onCollapse = () => {
     this.props.dispatch({

@@ -30,10 +30,10 @@ export default {
           type: 'updateInfo',
           payload: response.data,
         });
-        yield put({
-          type: 'updateLogin',
-          payload: {loading: false},
-        });
+        // yield put({
+        //   type: 'updateLogin',
+        //   payload: {loading: false},
+        // });
         yield put({
           type: 'global/updateGlobal',
           payload: response.data,
@@ -46,6 +46,10 @@ export default {
           description: '亲爱的' + response.data.email + ', 欢迎回来.',
         });
       }
+      yield put({
+        type: 'updateLogin',
+        payload: {loading: false},
+      });
     }
   },
   // subscriptions: {
