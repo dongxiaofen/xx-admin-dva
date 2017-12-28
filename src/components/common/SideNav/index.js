@@ -8,7 +8,7 @@ import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 
 const SideNav = ({ globalStore, navData, location }) => {
-  // console.log(location, 'location===');
+  console.log(location, 'location===');
   const getSideNav = (sideNavData, parentPath = '') => {
     return sideNavData.map((item) => {
       if (!item.name) {
@@ -36,13 +36,29 @@ const SideNav = ({ globalStore, navData, location }) => {
     });
   };
   const getOpenedKey = (data) => {
+    const pathname = location.pathname.split('/')[1];
+    // console.log(pathname, 'pathname');
+    let openedKey = '';
     const idx = data.findIndex(({isOpen}) => isOpen);
-    return data[idx].path;
+    if (data.findIndex(({path}) => pathname === path) !== -1) {
+      openedKey = pathname;
+    } else if (idx !== -1) {
+      openedKey = data[idx].path;
+    }
+    return openedKey;
   };
   const getSelectedKey = (data) => {
-    const pIdx = data.findIndex(({isOpen}) => isOpen);
+    let selectedKey = '';
+    const openedKey = getOpenedKey(data);
+    const pIdx = data.findIndex(({path}) => path === openedKey);
     const idx = data[pIdx].children.findIndex(({selected}) => selected);
-    return data[pIdx].children[idx].path;
+    const pathname = location.pathname.split('/')[2];
+    if (data[pIdx].children.findIndex(({path}) => path === pathname) !== -1) {
+      selectedKey = pathname;
+    } else if (idx !== -1) {
+      selectedKey = data[pIdx].children[idx].path;
+    }
+    return selectedKey;
   };
 
   return (

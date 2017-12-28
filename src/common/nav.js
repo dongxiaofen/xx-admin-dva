@@ -23,12 +23,12 @@ export const navigation = app => ({
         name: '客户中心',
         path: 'clientCenter',
         icon: 'user',
-        isOpen: true, // 导航是否展开
+        isOpen: true, // 默认展开的导航
         children: [
           {
             name: ' 客户列表', // 没有该字段，左侧导航不展示
             path: 'clientList',
-            selected: true, // 导航是否选中
+            selected: true, // 默认选中的导航
             component: dynamicWrapper(app, [], () => import('../routes/ClientList')),
           },
           {
