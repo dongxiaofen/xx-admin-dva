@@ -77,14 +77,15 @@ export default {
   effects: {
     * getUserInfo(_, {call, put}) {
       const response = yield call(getUserInfo);
-      yield put({
-        type: 'updateGlobal',
-        payload: response.data,
-      });
+      if (response.success) {
+        yield put({
+          type: 'updateGlobal',
+          payload: response.data,
+        });
+      }
     },
     * logout(_, {call, put}) {
-      const response = yield call(logout);
-      // console.log(response, 'response---------===========');
+      yield call(logout);
       yield put({
         type: 'updateGlobal',
         payload: {},

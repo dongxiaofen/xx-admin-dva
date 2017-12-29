@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'dva/router';
 import { connect } from 'dva';
+import pathval from 'pathval';
+import { ContainerQuery } from 'react-container-query';
+import classNames from 'classnames';
 // import { withRouter } from 'dva/router';
 
 import { Layout } from 'antd';
@@ -10,13 +13,33 @@ import HeaderCont from '../../components/common/Header';
 import SideNav from '../../components/common/SideNav';
 import Error from '../Error';
 import ClientList from '../ClientList';
-
 import styles from './index.less';
+
+const query = {
+  'screen-xs': {
+    maxWidth: 575,
+  },
+  'screen-sm': {
+    minWidth: 576,
+    maxWidth: 767,
+  },
+  'screen-md': {
+    minWidth: 768,
+    maxWidth: 991,
+  },
+  'screen-lg': {
+    minWidth: 992,
+    maxWidth: 1199,
+  },
+  'screen-xl': {
+    minWidth: 1200,
+  },
+};
 
 class App extends Component {
   static propTypes = {
     // children: PropTypes.element.isRequired,
-    // location: PropTypes.object,
+    navData: PropTypes.object,
     dispatch: PropTypes.func,
     global: PropTypes.object,
     // loading: PropTypes.object,
@@ -36,7 +59,7 @@ class App extends Component {
   getBasicRouter = () => {
     const basicNavData = this.props.navData.basic.children;
     const routes = [];
-    basicNavData.map(({ name, path, children }) => {
+    basicNavData.map(({ path, children }) => {
       children.map((item) => {
         routes.push(
           <Route
@@ -52,30 +75,38 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <Layout style={{ minHeight: '100vh' }}>
-          <Header className={styles.header}>
-            <HeaderCont />
-          </Header>
-          <Layout>
-            <Sider
-              collapsible
-              collapsed={this.props.global.collapsed}
-              onCollapse={this.onCollapse}>
-              <SideNav navData={this.props.navData}/>
-            </Sider>
-            <Content>
-              <Switch>
-                <Redirect exact from='/' to='/clientCenter/clientList'/>
-                {
-                  this.getBasicRouter()
-                }
-                <Route component={Error} />
-              </Switch>
-            </Content>
-          </Layout>
-        </Layout>
-      </div>
+      <ContainerQuery query={query}>
+        {
+          params => (
+            <div className={classNames(params)}>
+              <Layout style={{ minHeight: '100vh' }}>
+                <Header className={styles.header}>
+                  <HeaderCont />
+                </Header>
+                <Layout>
+                  <Sider
+                    collapsible
+                    collapsed={pathval.getPathValue(this.props.global, 'collapsed')}
+                    onCollapse={this.onCollapse}
+                    breakpoint="md"
+                    width={200}>
+                    <SideNav navData={this.props.navData}/>
+                  </Sider>
+                  <Content style={{margin: '25px 25px 0'}}>
+                    <Switch>
+                      <Redirect exact from='/' to='/clientCenter/clientList'/>
+                      {
+                        this.getBasicRouter()
+                      }
+                      <Route component={Error} />
+                    </Switch>
+                  </Content>
+                </Layout>
+              </Layout>
+            </div>
+          )
+        }
+      </ContainerQuery>
     );
   }
 }

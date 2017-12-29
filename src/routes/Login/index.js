@@ -25,7 +25,7 @@ const Login = ({
       // console.log(values, 'values');
       dispatch({ type: 'login/login', payload: {email: values.email, password: encHex.stringify(md5(values.password))} });
       dispatch({ type: 'login/updateLogin', payload: {loading: true, ...values} });
-    })
+    });
   }
   return (
     <div className={styles.login}>

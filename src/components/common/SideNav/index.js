@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { withRouter } from 'dva/router';
-import { Link } from 'dva/router';
-import pathval from 'pathval';
+import { withRouter, Link } from 'dva/router';
+// import { Link } from 'dva/router';
+// import pathval from 'pathval';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 
-const SideNav = ({ globalStore, navData, location }) => {
-  console.log(location, 'location===');
+const SideNav = ({ navData, location }) => {
   const getSideNav = (sideNavData, parentPath = '') => {
     return sideNavData.map((item) => {
       if (!item.name) {
@@ -32,15 +31,15 @@ const SideNav = ({ globalStore, navData, location }) => {
             <span>{item.name}</span>
           </Link>
         </Menu.Item>
-      )
+      );
     });
   };
   const getOpenedKey = (data) => {
     const pathname = location.pathname.split('/')[1];
     // console.log(pathname, 'pathname');
     let openedKey = '';
-    const idx = data.findIndex(({isOpen}) => isOpen);
-    if (data.findIndex(({path}) => pathname === path) !== -1) {
+    const idx = data.findIndex(({ isOpen }) => isOpen);
+    if (data.findIndex(({ path }) => pathname === path) !== -1) {
       openedKey = pathname;
     } else if (idx !== -1) {
       openedKey = data[idx].path;
@@ -82,8 +81,9 @@ const SideNav = ({ globalStore, navData, location }) => {
 };
 
 SideNav.propTypes = {
-  globalStore: PropTypes.object,
-  dispatch: PropTypes.func,
+  navData: PropTypes.object,
+  // dispatch: PropTypes.func,
+  location: PropTypes.object,
 };
 
 export default withRouter(connect((state) => ({globalStore: state.global}))(SideNav));
