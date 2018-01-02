@@ -29,11 +29,16 @@ export const navigation = app => ({
             name: ' 客户列表', // 没有该字段，左侧导航不展示
             path: 'clientList',
             selected: true, // 默认选中的导航
-            component: dynamicWrapper(app, [], () => import('../routes/ClientList')),
+            component: dynamicWrapper(app, ['clientList'], () => import('../routes/ClientList')),
           },
           {
             name: ' 客户权限组设置',
             path: 'clientRole',
+            component: dynamicWrapper(app, [], () => import('../routes/ClientList')),
+          },
+          {
+            // name: ' 创建客户',
+            path: 'clientCreate',
             component: dynamicWrapper(app, [], () => import('../routes/ClientList')),
           },
         ],

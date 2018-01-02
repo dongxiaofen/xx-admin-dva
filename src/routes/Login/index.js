@@ -17,14 +17,14 @@ const Login = ({
   },
   // ...props
 }) => {
-  function handleOk () {
+  function handleOk() {
     validateFieldsAndScroll((errors, values) => {
       if (errors) {
         return;
       }
       // console.log(values, 'values');
-      dispatch({ type: 'login/login', payload: {email: values.email, password: encHex.stringify(md5(values.password))} });
-      dispatch({ type: 'login/updateLogin', payload: {loading: true, ...values} });
+      dispatch({ type: 'login/login', payload: { email: values.email, password: encHex.stringify(md5(values.password)) } });
+      dispatch({ type: 'login/updateLogin', payload: { loading: true, ...values } });
     });
   }
   return (
@@ -76,4 +76,4 @@ Login.propTypes = {
 //   return {state.login};
 // }
 // export default connect(mapStateToProps)(Form.create()(Login))
-export default connect(({login}) => ({login}))(Form.create()(Login));
+export default connect(({ login }) => ({ login }))(Form.create()(Login));

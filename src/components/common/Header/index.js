@@ -6,7 +6,7 @@ import pathval from 'pathval';
 
 const HeaderCont = ({ globalStore, dispatch }) => {
   const logout = () => {
-    dispatch({type: 'global/logout'});
+    dispatch({ type: 'global/logout' });
   };
   return (
     <div className="clearfix">
@@ -24,4 +24,4 @@ HeaderCont.propTypes = {
   dispatch: PropTypes.func,
 };
 
-export default connect((state) => ({globalStore: state.global}))(HeaderCont);
+export default connect(state => ({ globalStore: state.global }))(HeaderCont);

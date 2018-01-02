@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import CirclesLoading from './components/common/CirclesLoading';
 // import App from './routes/App';
 import { navigation } from './common/nav';
-dynamic.setDefaultLoadingComponent(() => {
-  return <CirclesLoading />;
-});
+
+dynamic.setDefaultLoadingComponent(() => <CirclesLoading />);
 
 function RouterConfig({ history, app }) {
   const navData = navigation(app);
@@ -18,7 +17,7 @@ function RouterConfig({ history, app }) {
   const routes = Object.keys(navData).map((item) => {
     const { path, component, exact } = navData[item];
     const Comp = component;
-    return (<Route key={path} exact={exact} path={path} render={(props) => <Comp {...props} {...passProps} />} />);
+    return (<Route key={path} exact={exact} path={path} render={props => <Comp {...props} {...passProps} />} />);
   });
   return (
     <Router history={history}>
@@ -28,7 +27,7 @@ function RouterConfig({ history, app }) {
       </Switch>
     </Router>
   );
-};
+}
 RouterConfig.propTypes = {
   history: PropTypes.object,
   app: PropTypes.object,

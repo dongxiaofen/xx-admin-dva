@@ -1,2 +1,2 @@
-export loadingComp from './LoadingComp';
+// export loadingComp from './LoadingComp';
 export pageRight from './PageRight';

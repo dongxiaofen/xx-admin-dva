@@ -8,11 +8,12 @@ import classNames from 'classnames';
 // import { withRouter } from 'dva/router';
 
 import { Layout } from 'antd';
+
 const { Header, Sider, Content } = Layout;
 import HeaderCont from '../../components/common/Header';
 import SideNav from '../../components/common/SideNav';
 import Error from '../Error';
-import ClientList from '../ClientList';
+// import ClientList from '../ClientList';
 import styles from './index.less';
 
 const query = {
@@ -45,10 +46,10 @@ class App extends Component {
     // loading: PropTypes.object,
   }
   componentDidMount() {
-    this.props.dispatch({type: 'global/getUserInfo'});
+    this.props.dispatch({ type: 'global/getUserInfo' });
   }
   componentWillUnmount() {
-    this.props.dispatch({type: 'global/clearGlobal'});
+    this.props.dispatch({ type: 'global/clearGlobal' });
   }
   onCollapse = () => {
     this.props.dispatch({
@@ -67,7 +68,7 @@ class App extends Component {
             key={`/${path}/${item.path}`}
             path={`/${path}/${item.path}`}
             component={item.component}
-            />
+          />
         );
       });
     });
@@ -89,12 +90,13 @@ class App extends Component {
                     collapsed={pathval.getPathValue(this.props.global, 'collapsed')}
                     onCollapse={this.onCollapse}
                     breakpoint="md"
-                    width={200}>
-                    <SideNav navData={this.props.navData}/>
+                    width={200}
+                  >
+                    <SideNav navData={this.props.navData} />
                   </Sider>
-                  <Content style={{margin: '25px 25px 0'}}>
+                  <Content style={{ margin: '25px 25px 0', background: '#fff', padding: '25px' }}>
                     <Switch>
-                      <Redirect exact from='/' to='/clientCenter/clientList'/>
+                      <Redirect exact from="/" to="/clientCenter/clientList" />
                       {
                         this.getBasicRouter()
                       }

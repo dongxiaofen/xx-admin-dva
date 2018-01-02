@@ -12,8 +12,8 @@ export default {
     // loginErr: '',
   },
   reducers: {
-    updateLogin(state, {payload}) {
-      return {...state, ...payload};
+    updateLogin(state, { payload }) {
+      return { ...state, ...payload };
     },
     updateInfo(state, { payload }) {
       return {
@@ -23,7 +23,7 @@ export default {
     }
   },
   effects: {
-    * login({payload}, {call, put}) {
+    * login({ payload }, { call, put }) {
       const response = yield call(login, payload);
       if (response && response.success) {
         yield put({
@@ -43,12 +43,12 @@ export default {
         window.localStorage.removeItem('sessionOutUrl');
         notification.success({
           message: '登录成功',
-          description: '亲爱的' + response.data.email + ', 欢迎回来.',
+          description: `亲爱的${response.data.email}, 欢迎回来.`,
         });
       }
       yield put({
         type: 'updateLogin',
-        payload: {loading: false},
+        payload: { loading: false },
       });
     }
   },
