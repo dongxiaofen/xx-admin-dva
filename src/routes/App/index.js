@@ -94,7 +94,7 @@ class App extends Component {
                   >
                     <SideNav navData={this.props.navData} />
                   </Sider>
-                  <Content style={{ margin: '25px 25px 0', background: '#fff', padding: '25px' }}>
+                  <Content style={{ margin: '25px 25px 0', padding: '25px', background: '#fff' }}>
                     <Switch>
                       <Redirect exact from="/" to="/clientCenter/clientList" />
                       {

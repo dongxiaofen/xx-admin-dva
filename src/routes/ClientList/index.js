@@ -4,28 +4,28 @@ import { connect } from 'dva';
 import { pageRight } from '../../components/hoc';
 import CreateClient from '../../components/clientList/create';
 import Filters from '../../components/clientList/filter';
+import List from '../../components/clientList/list';
 // import { withRouter } from 'dva/router';
 // import styles from './index.less';
 
 class ClientList extends Component {
   static propTypes = {
-    // location: PropTypes.object,
     dispatch: PropTypes.func,
-    // app: PropTypes.object,
-    // loading: PropTypes.object,
   }
-  // constructor(props) {
-  //   super(props);
-  // }
   componentDidMount() {
     this.props.dispatch({ type: 'clientList/getClientList' });
     this.props.dispatch({ type: 'clientList/getRoleType' });
   }
   render() {
+    const hocData = {
+      loading: this.props.clientList.isListLoading,
+      error: this.props.clientList.list.content === undefined || this.props.clientList.list.error,
+    };
     return (
       <div>
         <CreateClient />
         <Filters />
+        <List hocData={hocData}/>
       </div>
     );
   }
