@@ -12,6 +12,7 @@ import { Layout } from 'antd';
 const { Header, Sider, Content } = Layout;
 import HeaderCont from '../../components/common/Header';
 import SideNav from '../../components/common/SideNav';
+import Modal from '../../components/common/Modal';
 import Error from '../Error';
 // import ClientList from '../ClientList';
 import styles from './index.less';
@@ -105,6 +106,7 @@ class App extends Component {
                   </Content>
                 </Layout>
               </Layout>
+              <Modal />
             </div>
           )
         }
@@ -113,6 +115,7 @@ class App extends Component {
   }
 }
 function mapStateToProps(state) {
+  // console.log(state, 'state');
   return {
     global: state.global,
   };

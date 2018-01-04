@@ -23,7 +23,7 @@ export default {
     }
   },
   effects: {
-    * login({ payload }, { call, put }) {
+    *login({ payload }, { call, put }) {
       const response = yield call(login, payload);
       if (response && response.success) {
         yield put({

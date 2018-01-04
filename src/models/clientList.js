@@ -22,8 +22,27 @@ export default {
       { label: '账号有效时间', field: 'expireDt', sort: 'desc' },
       { label: '最近登陆日期', field: 'lastLoginTs', sort: 'desc' },
     ],
-    showChargeModal: false,
+    // showChargeModal: false,
     // rechargeType: '',
+    recharge: {
+      originData: null,
+      point: {
+        availableUserNum: 0,
+        point: 0,
+      },
+      feeset: {
+        availableUserNum: 0,
+        idCheckNum: 0,
+        investigationNum: 0,
+        monitorNum: 0,
+        networkNum: 0,
+        personCheckNum: 0,
+        reportNum: 0,
+        riskScanNum: 0,
+        taxCheckNum: 0,
+        taxNum: 0,
+      },
+    },
   },
   reducers: {
     updateClientList(state, { payload }) {
@@ -50,9 +69,66 @@ export default {
         })
       };
     },
+    saveRechargeOrigin(state, { payload }) {
+      return {
+        ...state,
+        recharge: {
+          ...state.recharge,
+          originData: payload,
+        }
+      };
+    },
+    savePoint(state, { payload }) {
+      return {
+        ...state,
+        recharge: {
+          ...state.recharge,
+          point: {
+            ...state.recharge.point,
+            ...payload
+          }
+        },
+      };
+    },
+    saveFeeset(state, { payload }) {
+      return {
+        ...state,
+        recharge: {
+          ...state.recharge,
+          feeset: {
+            ...state.recharge.feeset,
+            ...payload
+          }
+        },
+      };
+    },
+    resetRecharge(state) {
+      return {
+        ...state,
+        recharge: {
+          originData: null,
+          point: {
+            availableUserNum: 0,
+            point: 0,
+          },
+          feeset: {
+            availableUserNum: 0,
+            idCheckNum: 0,
+            investigationNum: 0,
+            monitorNum: 0,
+            networkNum: 0,
+            personCheckNum: 0,
+            reportNum: 0,
+            riskScanNum: 0,
+            taxCheckNum: 0,
+            taxNum: 0,
+          }
+        }
+      }
+    }
   },
   effects: {
-    * getClientList(_, { call, put, select, fork, cancel }) {
+    *getClientList(_, { call, put, select, fork, cancel }) {
       const listCanacel = yield select(state => state.clientList.listCanacel);
       if (listCanacel) {
         // console.log(listCanacel, 'listCanacel');
@@ -98,7 +174,7 @@ export default {
         });
       }
     },
-    * getRoleType(_, { call, put }) {
+    *getRoleType(_, { call, put }) {
       const response = yield call(getRoleType);
       if (response && response.success) {
         yield put({

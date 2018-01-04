@@ -26,8 +26,11 @@ class ClientItem extends Component {
     return (
       <Card style={{ width: '100%' }} className={styles['client-item']}>
         <TopInfo clientData={this.props.clientData} />
+
         {this.state.isShowConsume && <ConsumeInfo clientData={this.props.clientData} />}
-        <MoreBtn />
+
+        <MoreBtn clientData={this.props.clientData} />
+
         <span onClick={this.showConsume} className={`${styles['show-btn']} ${this.state.isShowConsume ? styles.close : styles.open}`}>
           <Icon type={this.state.isShowConsume ? 'up' : 'down'} />
           {this.state.isShowConsume ? ' 收起详细信息' : ' 展开详细信息'}
@@ -37,21 +40,4 @@ class ClientItem extends Component {
   }
 }
 
-// const ClientItem = ({ clientData }) => {
-//   // console.log(clientData, 'clientClientItem');
-//   let isShowConsume = false;
-//   return (
-//     <Card style={{ width: '100%' }} className={styles['client-item']}>
-//       <TopInfo clientData={clientData} />
-//       <ConsumeInfo clientData={clientData} />
-//       <MoreBtn />
-//     </Card>
-//   )
-// };
-
-// ClientItem.propTypes = {
-//   clientData: PropTypes.object,
-// };
-
 export default ClientItem;
-// export default connect(state => ({ clientClientItem: state.clientClientItem }))(ClientItem);
