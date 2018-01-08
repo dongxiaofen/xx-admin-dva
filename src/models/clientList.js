@@ -1,6 +1,8 @@
-import { getClientList, getRoleType } from '../services/clientList';
+import { getClientList, getRoleType, rechargePoint, rechargeFeeset } from '../services/clientList';
 import axios from 'axios';
+import { message } from 'antd';
 // let listCanacel = null;
+
 export default {
   namespace: 'clientList',
   state: {
@@ -60,12 +62,11 @@ export default {
     changeSortData(state, { payload }) {
       return {
         ...state,
-        sortData: state.sortData.map(({label, field, sort}, index) => {
+        sortData: state.sortData.map(({ label, field, sort }, index) => {
           if (index === payload) {
             return { label, field, sort: sort === 'desc' ? 'asc' : 'desc' };
-          } else {
-            return { label, field, sort };
           }
+          return { label, field, sort };
         })
       };
     },
@@ -124,11 +125,11 @@ export default {
             taxNum: 0,
           }
         }
-      }
+      };
     }
   },
   effects: {
-    *getClientList(_, { call, put, select, fork, cancel }) {
+    * getClientList(_, { call, put, select }) {
       const listCanacel = yield select(state => state.clientList.listCanacel);
       if (listCanacel) {
         // console.log(listCanacel, 'listCanacel');
@@ -174,7 +175,7 @@ export default {
         });
       }
     },
-    *getRoleType(_, { call, put }) {
+    * getRoleType(_, { call, put }) {
       const response = yield call(getRoleType);
       if (response && response.success) {
         yield put({
@@ -182,6 +183,45 @@ export default {
           payload: { roleType: response.data },
         });
       }
+    },
+    * rechargePoint(_, {call, select, put}) {
+      const point = yield select(state => state.clientList.recharge.point);
+      const userId = yield select(state => state.clientList.recharge.originData.userId);
+      yield put({
+        type: 'modal/loadingChang',
+        payload: true
+      });
+      const response = yield call(rechargePoint, userId, point);
+      if (response.success) {
+        yield put({
+          type: 'modal/resetModal'
+        });
+        message.success('充值成功');
+      }
+      yield put({
+        type: 'modal/loadingChang',
+        payload: false
+      });
+    },
+    * rechargeFeeset(_, {call, select, put}) {
+      const feeset = yield select(state => state.clientList.recharge.feeset);
+      const userId = yield select(state => state.clientList.recharge.originData.userId);
+      yield put({
+        type: 'modal/loadingChang',
+        payload: true
+      });
+      const response = yield call(rechargeFeeset, userId, feeset);
+      if (response.success) {
+        yield put({
+          type: 'modal/resetModal'
+        });
+        message.success('充值成功');
+        // console.log('success---');
+      }
+      yield put({
+        type: 'modal/loadingChang',
+        payload: false
+      });
     }
   },
 };

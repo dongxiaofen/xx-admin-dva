@@ -11,10 +11,10 @@ const SortFilter = ({ clientList, dispatch }) => {
     // let type;
     if (field === sortField) {
       const type = sort === 'desc' ? 'asc' : 'desc';
-      filterData = field + ',' + type;
+      filterData = `${field},${type}`;
       dispatch({ type: 'clientList/changeSortData', payload: idx });
     } else {
-      filterData = field + ',' + sort;
+      filterData = `${field},${sort}`;
     }
     dispatch({ type: 'clientList/changeFilter', payload: { sort: filterData } });
     dispatch({ type: 'clientList/getClientList' });

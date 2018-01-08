@@ -15,4 +15,4 @@ Recharge.propTypes = {
   clientList: PropTypes.object,
 };
 
-export default connect(state => ({clientList: state.clientList}))(Recharge);
+export default connect(state => ({ clientList: state.clientList }))(Recharge);

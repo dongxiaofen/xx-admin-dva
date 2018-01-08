@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { connect } from 'dva';
-import { Card, Row, Col, Icon } from 'antd';
+import { Card, Icon } from 'antd';
 import TopInfo from './topInfo';
 import ConsumeInfo from './consumeInfo';
 import MoreBtn from './moreBtn';

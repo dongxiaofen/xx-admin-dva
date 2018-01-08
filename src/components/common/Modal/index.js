@@ -14,6 +14,7 @@ const _Modal = ({ modal, dispatch }) => {
     footer,
     onCancel,
     onOk,
+    loading,
     // onClose,
     contentText,
     modalComp
@@ -25,7 +26,7 @@ const _Modal = ({ modal, dispatch }) => {
     }
   };
   const handleCancel = () => {
-    dispatch({type: 'modal/resetModal'});
+    dispatch({ type: 'modal/resetModal' });
     if (onCancel) {
       onCancel();
     }
@@ -39,10 +40,12 @@ const _Modal = ({ modal, dispatch }) => {
       onCancel={handleCancel}
       cancelText={cancelText}
       okText={okText}
-      footer={footer}>
+      footer={footer}
+      confirmLoading={loading}
+    >
       { contentText ? <span>{ contentText }</span> : null }
       { ModalComp ? <ModalComp /> : null }
-    </Modal>
+    </Modal>;
   }
   return (
     <Modal
@@ -52,15 +55,18 @@ const _Modal = ({ modal, dispatch }) => {
       onOk={handleOk}
       onCancel={handleCancel}
       cancelText={cancelText}
-      okText={okText}>
+      okText={okText}
+      confirmLoading={loading}
+    >
       { contentText ? <span>{ contentText }</span> : null }
       { ModalComp ? <ModalComp /> : null }
     </Modal>
-  )
+  );
 };
 
 _Modal.propTypes = {
   modal: PropTypes.object,
+  dispatch: PropTypes.func,
 };
 
 export default connect(state => ({

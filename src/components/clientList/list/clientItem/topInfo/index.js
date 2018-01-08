@@ -19,17 +19,17 @@ const TopInfo = ({ clientData }) => {
     return info;
   };
   const topList = [
-    {name: 'clientManager', label: '所属客户经理', md: 4},
-    {name: 'roleName', label: '权限', md: 3},
-    {name: 'accountType', label: '属性', md: 4},
-    {name: 'createdTs', label: '开户时间', md: 3},
-    {name: 'expireDt', label: '账号有效时间', md: 4},
-    {name: 'lastLoginTs', label: '下属账号最近登录日期', md: 6},
-    {name: 'subUserCount', label: '账户总数', handle: dealData, md: 4},
-    {name: 'consumeType', label: '计费方式', handle: dealData, md: 3},
-    {name: 'creator', label: '操作人', md: 4},
-    {name: 'status', label: '状态', handle: dealData, md: 3}
-  ]
+    { name: 'clientManager', label: '所属客户经理', md: 4 },
+    { name: 'roleName', label: '权限', md: 3 },
+    { name: 'accountType', label: '属性', md: 4 },
+    { name: 'createdTs', label: '开户时间', md: 3 },
+    { name: 'expireDt', label: '账号有效时间', md: 4 },
+    { name: 'lastLoginTs', label: '下属账号最近登录日期', md: 6 },
+    { name: 'subUserCount', label: '账户总数', handle: dealData, md: 4 },
+    { name: 'consumeType', label: '计费方式', handle: dealData, md: 3 },
+    { name: 'creator', label: '操作人', md: 4 },
+    { name: 'status', label: '状态', handle: dealData, md: 3 }
+  ];
   return (<Row gutter={{ md: 8, lg: 18, xl: 36 }} className={styles['item-row']}>
     <Col md={6} sm={12} className={styles['item-col']} key="email">
       <p className={styles.content}>{ clientData.companyName }</p>
@@ -43,7 +43,7 @@ const TopInfo = ({ clientData }) => {
         </Col>
       ))
     }
-  </Row>)
+  </Row>);
 };
 
 TopInfo.propTypes = {

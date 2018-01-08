@@ -22,7 +22,7 @@ export default {
       return {
         ...state,
         loading: payload,
-      }
+      };
     },
     resetModal() {
       return {
@@ -42,7 +42,7 @@ export default {
     }
   },
   effects: {
-    *openModal({ payload }, { put }) {
+    * openModal({ payload }, { put }) {
       const {
         visible,
         width,
@@ -54,7 +54,7 @@ export default {
         onOk,
         contentText,
         loader
-      } = payload
+      } = payload;
       const data = {};
       if (visible) { data.visible = visible; }
       if (width) { data.width = width; }
@@ -70,7 +70,7 @@ export default {
           data.modalComp = comp;
         });
       }
-      yield put({type: 'handleOpen', payload: data});
+      yield put({ type: 'handleOpen', payload: data });
     },
   },
 };

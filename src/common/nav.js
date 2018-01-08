@@ -39,7 +39,7 @@ export const navigation = app => ({
           {
             // name: ' 创建客户',
             path: 'clientCreate',
-            component: dynamicWrapper(app, [], () => import('../routes/ClientList')),
+            component: dynamicWrapper(app, ['clientCreate'], () => import('../routes/ClientCreate')),
           },
         ],
       }, {

@@ -10,7 +10,7 @@ const List = ({ clientList }) => {
     const output = [];
     if (listData) {
       listData.map((item, idx) => {
-        output.push(<ClientItem key={idx} clientData={item}/>);
+        output.push(<ClientItem key={idx} clientData={item} />);
       });
     }
     return output;
@@ -21,7 +21,7 @@ const List = ({ clientList }) => {
         {createList()}
       </ul>
     </div>
-  )
+  );
 };
 
 List.propTypes = {
@@ -29,7 +29,7 @@ List.propTypes = {
 };
 
 export default loadingComp({
-  mapDataToProps: (props) => ({
+  mapDataToProps: props => ({
     loading: props.hocData.loading,
     error: props.hocData.error
   })

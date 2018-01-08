@@ -11,6 +11,7 @@ import List from '../../components/clientList/list';
 class ClientList extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
+    ClientList: PropTypes.object,
   }
   componentDidMount() {
     this.props.dispatch({ type: 'clientList/getClientList' });
@@ -25,7 +26,7 @@ class ClientList extends Component {
       <div>
         <CreateClient />
         <Filters />
-        <List hocData={hocData}/>
+        <List hocData={hocData} />
       </div>
     );
   }

@@ -6,40 +6,14 @@ import Recharge from '../recharge';
 import styles from './index.less';
 
 const MoreBtn = ({ dispatch, clientData }) => {
-  // console.log(props, 'props');
   const handleRecharge = () => {
-    console.log('handleRecharge');
+    if(clientData.consumeType === 'POINT') {
+      dispatch({type: 'clientList/rechargePoint'});
+    } else {
+      dispatch({type: 'clientList/rechargeFeeset'});
+    }
   };
   const cancelRecharge = () => {
-    // if (clientData.consumeType === 'POINT') {
-    //   dispatch({
-    //     type: 'clientList/savePoint',
-    //     payload: {
-    //       availableUserNum: 0,
-    //       point: 0,
-    //     },
-    //   });
-    // } else {
-    //   dispatch({
-    //     type: 'clientList/saveFeeset',
-    //     payload: {
-    //       availableUserNum: 0,
-    //       idCheckNum: 0,
-    //       investigationNum: 0,
-    //       monitorNum: 0,
-    //       networkNum: 0,
-    //       personCheckNum: 0,
-    //       reportNum: 0,
-    //       riskScanNum: 0,
-    //       taxCheckNum: 0,
-    //       taxNum: 0,
-    //     },
-    //   });
-    // }
-    // dispatch({
-    //   type: 'clientList/saveRechargeOrigin',
-    //   payload: null
-    // });
     dispatch({ type: 'clientList/resetRecharge' });
   };
   const openRecharge = () => {
@@ -63,13 +37,13 @@ const MoreBtn = ({ dispatch, clientData }) => {
   const menu = (
     <Menu>
       <Menu.Item>
-        子账户列表
+        <span className={styles.lists}>子账户列表</span>
       </Menu.Item>
       <Menu.Item>
-        <span onClick={openRecharge}>套餐充值</span>
+        <span className={styles.lists} onClick={openRecharge}>套餐充值</span>
       </Menu.Item>
       <Menu.Item>
-        编辑详情
+        <span className={styles.lists}>编辑详情</span>
       </Menu.Item>
     </Menu>
   );
@@ -81,7 +55,7 @@ const MoreBtn = ({ dispatch, clientData }) => {
       </Dropdown>
     </div>
   );
-}
+};
 
 MoreBtn.propTypes = {
   clientData: PropTypes.object,
