@@ -1,32 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch, Redirect } from 'dva/router';
 import { connect } from 'dva';
-import { withRouter } from 'dva/router';
+import pathval from 'pathval';
+import { ContainerQuery } from 'react-container-query';
+import classNames from 'classnames';
+// import { withRouter } from 'dva/router';
 
 import { Layout } from 'antd';
+
 const { Header, Sider, Content } = Layout;
 import HeaderCont from '../../components/common/Header';
 import SideNav from '../../components/common/SideNav';
-
+import Modal from '../../components/common/Modal';
+import Error from '../Error';
+// import ClientList from '../ClientList';
 import styles from './index.less';
+
+const query = {
+  'screen-xs': {
+    maxWidth: 575,
+  },
+  'screen-sm': {
+    minWidth: 576,
+    maxWidth: 767,
+  },
+  'screen-md': {
+    minWidth: 768,
+    maxWidth: 991,
+  },
+  'screen-lg': {
+    minWidth: 992,
+    maxWidth: 1199,
+  },
+  'screen-xl': {
+    minWidth: 1200,
+  },
+};
 
 class App extends Component {
   static propTypes = {
-    children: PropTypes.element.isRequired,
-    location: PropTypes.object,
+    // children: PropTypes.element.isRequired,
+    navData: PropTypes.object,
     dispatch: PropTypes.func,
-    app: PropTypes.object,
-    loading: PropTypes.object,
-  }
-  constructor(props) {
-    super(props);
+    global: PropTypes.object,
+    // loading: PropTypes.object,
   }
   componentDidMount() {
-    const pathname = this.props.location.pathname;
-    if (pathname !== '/login') {
-      // console.log('获取登录信息');
-      this.props.dispatch({type: 'global/getUserInfo'});
-    }
+    this.props.dispatch({ type: 'global/getUserInfo' });
+  }
+  componentWillUnmount() {
+    this.props.dispatch({ type: 'global/clearGlobal' });
   }
   onCollapse = () => {
     this.props.dispatch({
@@ -34,36 +58,67 @@ class App extends Component {
       payload: !this.props.global.collapsed,
     });
   }
+  getBasicRouter = () => {
+    const basicNavData = this.props.navData.basic.children;
+    const routes = [];
+    basicNavData.map(({ path, children }) => {
+      children.map((item) => {
+        routes.push(
+          <Route
+            exact
+            key={`/${path}/${item.path}`}
+            path={`/${path}/${item.path}`}
+            component={item.component}
+          />
+        );
+      });
+    });
+    return routes;
+  }
   render() {
-    // console.log(this.props.global, 'this.props.global');
-    const pathname = this.props.location.pathname;
     return (
-      <div>
+      <ContainerQuery query={query}>
         {
-          pathname === '/login' ? this.props.children :
-          <div>
-            <Layout style={{ minHeight: '100vh' }}>
-              <Header className={styles.header}>
-                <HeaderCont />
-              </Header>
-              <Layout>
-                <Sider
-                  collapsible
-                  collapsed={this.props.global.collapsed}
-                  onCollapse={this.onCollapse}>
-                  <SideNav />
-                </Sider>
-                <Content>{this.props.children}</Content>
+          params => (
+            <div className={classNames(params)}>
+              <Layout style={{ minHeight: '100vh' }}>
+                <Header className={styles.header}>
+                  <HeaderCont />
+                </Header>
+                <Layout>
+                  <Sider
+                    collapsible
+                    collapsed={pathval.getPathValue(this.props.global, 'collapsed')}
+                    onCollapse={this.onCollapse}
+                    breakpoint="md"
+                    width={200}
+                  >
+                    <SideNav navData={this.props.navData} />
+                  </Sider>
+                  <Content style={{ margin: '25px 25px 0', padding: '25px', background: '#fff' }}>
+                    <Switch>
+                      <Redirect exact from="/" to="/clientCenter/clientList" />
+                      {
+                        this.getBasicRouter()
+                      }
+                      <Route component={Error} />
+                    </Switch>
+                  </Content>
+                </Layout>
               </Layout>
-            </Layout>
-          </div>
+              <Modal />
+            </div>
+          )
         }
-      </div>
+      </ContainerQuery>
     );
   }
 }
 function mapStateToProps(state) {
-  return {global: state.global};
+  // console.log(state, 'state');
+  return {
+    global: state.global,
+  };
 }
 
-export default withRouter(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);

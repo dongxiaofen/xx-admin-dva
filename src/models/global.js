@@ -6,78 +6,36 @@ export default {
   state: {
     userInfo: {},
     collapsed: false, // 左侧导航展开
-    navigation: [
-      {
-        name: '管理员中心',
-        path: 'adminCenter',
-        icon: 'team',
-        children: [
-          {name: ' 管理员列表', path: 'adminList'},
-          {name: ' 管理员权限组设置', path: 'adminRole'},
-          {name: ' 管理员操作记录', path: 'adminOperate'},
-        ],
-      }, {
-        name: '客户中心',
-        path: 'clientCenter',
-        icon: 'user',
-        children: [
-          {name: ' 客户列表', path: 'clientList'},
-          {name: ' 客户权限组设置', path: 'clientRole'},
-        ],
-      }, {
-        name: '发票中心',
-        path: 'invoiceCenter',
-        icon: 'solution',
-        children: [
-          {name: '发票列表', path: 'invoiceList'}
-        ],
-      }, {
-        name: '系统设置',
-        path: 'systemCenter',
-        icon: 'tool',
-        children: [
-          {name: '模块配置', path: 'systemConfig'}
-        ],
-      }, {
-        name: '统计中心',
-        path: 'statisticsCenter',
-        icon: 'pie-chart',
-        children: [
-          {name: ' PV实时统计', path: 'PVstatistics'},
-          {name: '页面访问', path: 'pageView'},
-          {name: ' 用户访问统计', path: 'clientView'},
-        ],
-      }, {
-        name: '个人中心',
-        path: 'personCenter',
-        icon: 'contacts',
-        children: [
-          {name: '修改密码', path: 'changePwd'},
-        ],
-      }
-    ],
   },
   reducers: {
-    updateGlobal (state, {payload}) {
+    updateGlobal(state, { payload }) {
       return {
         ...state,
         userInfo: payload
       };
     },
-    collapsed (state, {payload}) {
-      return {...state, collapsed: payload}
+    collapsed(state, { payload }) {
+      return { ...state, collapsed: payload };
+    },
+    clearGlobal() {
+      return {
+        userInfo: {},
+        collapsed: false,
+      };
     }
   },
   effects: {
-    * getUserInfo (_, {call, put}) {
+    * getUserInfo(_, { call, put }) {
       const response = yield call(getUserInfo);
-      yield put({
-        type: 'updateGlobal',
-        payload: response.data,
-      });
+      if (response.success) {
+        yield put({
+          type: 'updateGlobal',
+          payload: response.data,
+        });
+      }
     },
-    * logout (_, {call, put}) {
-      const response = yield call(logout);
+    * logout(_, { call, put }) {
+      yield call(logout);
       yield put({
         type: 'updateGlobal',
         payload: {},
